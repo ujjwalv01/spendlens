@@ -62,12 +62,28 @@ export default function AuditPage() {
   }
 
   const hasSavings = summary.totalMonthlySavings > 0
+  const optimizedCount = summary.results.filter(r => r.severity === 'optimal').length
+  const totalCount = summary.results.length
+  const percentage = Math.round((optimizedCount / totalCount) * 100)
 
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30">
-      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12">
+      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in">
         {/* Header/Hero */}
         <div className="text-center space-y-4 py-8">
+          {/* Progress Bar */}
+          <div className="max-w-md mx-auto mb-10">
+            <div className="w-full bg-slate-800 rounded-full h-2 mb-3">
+              <div 
+                className="bg-emerald-400 h-2 rounded-full transition-all duration-1000 ease-out"
+                style={{ width: percentage + '%' }}
+              />
+            </div>
+            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">
+              {optimizedCount} of {totalCount} tools already optimized ({percentage}%)
+            </p>
+          </div>
+
           {hasSavings ? (
             <>
               <h1 className="text-2xl font-bold text-slate-300">You could save</h1>
@@ -102,6 +118,22 @@ export default function AuditPage() {
               </p>
             </>
           )}
+
+          {/* Stats Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Tools Audited</p>
+              <p className="text-white text-2xl font-black">{totalCount}</p>
+            </div>
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Monthly Savings</p>
+              <p className="text-emerald-400 text-2xl font-black">${summary.totalMonthlySavings.toLocaleString()}</p>
+            </div>
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Annual Savings</p>
+              <p className="text-emerald-400 text-2xl font-black">${summary.totalAnnualSavings.toLocaleString()}</p>
+            </div>
+          </div>
         </div>
 
         {/* AI Summary Card */}
@@ -196,7 +228,7 @@ export default function AuditPage() {
         </section>
 
         {/* Actions */}
-        <div className="flex flex-col md:flex-row gap-4 pt-8">
+        <div className="flex flex-col md:flex-row gap-4 pt-8 pb-20">
           <button
             onClick={handleShare}
             className="flex-1 border border-emerald-400/50 hover:bg-emerald-400/10 text-emerald-400 rounded-xl py-4 px-6 font-bold transition-all flex items-center justify-center gap-2"
