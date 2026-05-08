@@ -30,23 +30,30 @@ export async function POST(req: NextRequest) {
       teamSize,
     } = body
 
-    // PART 1 — Find top saving
+    // PART 1 — Find top saving (for fallback)
     const topSaving = auditResults.reduce((prev, current) =>
       prev.monthlySavings > current.monthlySavings ? prev : current
     )
 
-    // Build the prompt
+    // Build the enhanced prompt
     const prompt = `You are a concise financial advisor for startups.
-Write a 100-word personalized audit summary for a ${useCase} team of size ${teamSize}.
+Write a 200-250 word personalized audit summary for a ${useCase} team of size ${teamSize}.
 
 Their AI tools audit shows:
 - Total monthly savings opportunity: $${totalMonthlySavings}
 - Total annual savings opportunity: $${totalAnnualSavings}
 - Tools audited: ${auditResults.map((r) => r.toolName).join(', ')}
-- Top saving opportunity: ${topSaving.toolName} → ${topSaving.recommendedAction} saves $${topSaving.monthlySavings}/mo
+- Breakdown of recommendations:
+${auditResults.map((r) => 
+  `  * ${r.toolName}: ${r.recommendedAction} — saves $${r.monthlySavings}/mo. Reason: ${r.reason}`
+).join('\n')}
 
-Write in second person (you/your). Be specific about their tools and numbers. End with one actionable sentence.
-Keep it under 100 words. No bullet points, just a paragraph.`
+Structure your response in 3 short paragraphs:
+1. Overall assessment of their current AI spend and what the numbers mean for their team
+2. Top 2-3 specific recommendations with exact dollar amounts and why each makes sense
+3. What they should do first this week and projected annual impact if they act now
+
+Write in second person (you/your). Be specific about their actual tools and real numbers. Sound like a trusted advisor not a robot. No bullet points — flowing paragraphs only. 200-250 words exactly. Separate each paragraph with a blank line. Do not use bullet points or headers.`
 
     // PART 2 — CALL GROQ API
     const apiKey = process.env.GROQ_API_KEY
@@ -69,7 +76,7 @@ Keep it under 100 words. No bullet points, just a paragraph.`
               content: prompt,
             },
           ],
-          max_tokens: 150,
+          max_tokens: 300,
           temperature: 0.7,
         },
         { signal: controller.signal }

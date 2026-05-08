@@ -9,7 +9,6 @@ export default function AuditPage() {
   const router = useRouter()
   const [summary, setSummary] = useState<AuditSummary | null>(null)
   const [aiSummary, setAiSummary] = useState<string | null>(null)
-  const [isAI, setIsAI] = useState(false)
   const [isAiLoading, setIsAiLoading] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
@@ -52,7 +51,6 @@ export default function AuditPage() {
         if (response.ok) {
           const data = await response.json()
           setAiSummary(data.summary)
-          setIsAI(data.isAI)
         }
         setIsAiLoading(false)
       } catch {
@@ -167,16 +165,12 @@ export default function AuditPage() {
         </div>
 
         {/* AI Summary Card */}
-        <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl">
-          <div className="flex justify-between items-start mb-4">
-            <h2 className="text-lg font-bold flex items-center gap-2">
-              <span className="text-emerald-400">✨</span> Your Personalized Audit Summary
+        <section className="bg-slate-900/80 border-l-4 border-l-emerald-500 border-y border-r border-slate-800 rounded-r-2xl rounded-l-sm p-8 shadow-xl">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-2xl">✨</span>
+            <h2 className="text-white font-bold text-xl">
+              Your Personalized Audit Summary
             </h2>
-            {!isAiLoading && aiSummary && (
-              <span className={`text-xs px-2 py-1 rounded-full ${isAI ? 'text-emerald-400 bg-emerald-400/10' : 'text-slate-500 bg-slate-800'}`}>
-                {isAI ? 'AI Generated' : 'Template Summary'}
-              </span>
-            )}
           </div>
           
           {isAiLoading ? (
@@ -186,9 +180,13 @@ export default function AuditPage() {
               <div className="h-4 bg-slate-800 rounded w-4/6" />
             </div>
           ) : aiSummary ? (
-            <p className="text-slate-300 leading-relaxed italic">
-              {aiSummary}
-            </p>
+            <div className="space-y-4">
+              {aiSummary.split('\n\n').map((paragraph, index) => (
+                <p key={index} className="text-slate-300 leading-relaxed text-sm">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           ) : (
             <p className="text-slate-400 text-sm italic">
               Unable to generate AI summary. See your breakdown below.
