@@ -16,6 +16,7 @@ type FormState = {
   selectedTools: Record<string, ToolState>
   teamSize: string
   useCase: string
+  honeypot: string
 }
 
 const INITIAL_STATE: FormState = {
@@ -31,6 +32,7 @@ const INITIAL_STATE: FormState = {
   }, {} as Record<string, ToolState>),
   teamSize: '',
   useCase: '',
+  honeypot: '',
 }
 
 export default function SpendForm() {
@@ -38,6 +40,7 @@ export default function SpendForm() {
   const [formState, setFormState] = useState<FormState>(INITIAL_STATE)
   const [error, setError] = useState<string | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Load from localStorage
   useEffect(() => {
@@ -100,9 +103,12 @@ export default function SpendForm() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+
+    // Honeypot check
+    if (formState.honeypot) return
 
     const selectedTools = Object.entries(formState.selectedTools)
       .filter(([_, state]) => state.selected)
@@ -135,6 +141,8 @@ export default function SpendForm() {
       return
     }
 
+    setIsLoading(true)
+
     // Prepare inputs
     const auditInputs: AuditInput[] = selectedTools.map((t) => ({
       toolId: t.toolId,
@@ -151,11 +159,24 @@ export default function SpendForm() {
     localStorage.setItem('spendlens-audit', JSON.stringify(results))
     localStorage.setItem('spendlens-inputs', JSON.stringify(auditInputs))
 
+    // Simulate small delay for better UX before navigation
+    await new Promise(resolve => setTimeout(resolve, 800))
     router.push('/audit')
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Honeypot */}
+      <input 
+        type="text" 
+        name="website" 
+        style={{display: 'none'}} 
+        tabIndex={-1}
+        autoComplete="off"
+        value={formState.honeypot}
+        onChange={(e) => setFormState({...formState, honeypot: e.target.value})}
+      />
+
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-emerald-400">1. Select your tools</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -220,9 +241,14 @@ export default function SpendForm() {
                         <input
                           type="number"
                           className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white w-full text-sm"
-                          value={toolState.monthlySpend}
+                          value={toolState.monthlySpend || ''}
                           onChange={(e) => updateToolField(tool.toolId, 'monthlySpend', parseFloat(e.target.value) || 0)}
                         />
+                        {(toolState.monthlySpend === 0 || !toolState.monthlySpend) && (
+                          <p className="text-yellow-400 text-[10px] mt-1 font-medium italic">
+                            ⚠️ Enter your actual spend for accurate results
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -273,9 +299,17 @@ export default function SpendForm() {
       <div className="pt-8">
         <button
           type="submit"
-          className="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] transition-all text-black font-bold py-4 px-8 rounded-xl w-full text-lg shadow-lg shadow-emerald-500/20"
+          disabled={isLoading}
+          className="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all text-black font-bold py-4 px-8 rounded-xl w-full text-lg shadow-lg shadow-emerald-500/20 flex items-center justify-center"
         >
-          Audit My Spend →
+          {isLoading ? (
+            <>
+              <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-black inline-block mr-2"></span>
+              Analyzing your spend...
+            </>
+          ) : (
+            'Audit My Spend →'
+          )}
         </button>
         {error && <p className="text-red-400 text-sm mt-3 text-center animate-bounce">{error}</p>}
       </div>
