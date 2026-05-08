@@ -10,9 +10,7 @@ export default function Home() {
             <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
               SpendLens
             </span>
-            <span className="hidden sm:inline-block text-slate-400 text-[10px] font-bold border border-slate-700 px-2 py-0.5 rounded-full uppercase tracking-widest">
-              Free AI Spend Auditor
-            </span>
+
           </div>
           <div className="flex gap-6 text-sm font-medium text-slate-400">
             <a href="#" className="hover:text-emerald-400 transition-colors">Pricing Data</a>
