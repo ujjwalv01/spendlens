@@ -27,11 +27,21 @@ export default function AuditPage() {
         setSummary(parsedAudit)
         setIsLoaded(true)
 
+        const parsedInputs = JSON.parse(savedInputs)
+        const savedForm = localStorage.getItem('spendlens-form')
+        const parsedForm = savedForm ? JSON.parse(savedForm) : null
+
         // Fetch AI Summary
         const response = await fetch('/api/summary', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ audit: parsedAudit, inputs: JSON.parse(savedInputs) }),
+          body: JSON.stringify({
+            auditResults: parsedAudit.results,
+            totalMonthlySavings: parsedAudit.totalMonthlySavings,
+            totalAnnualSavings: parsedAudit.totalAnnualSavings,
+            useCase: parsedInputs[0]?.useCase || 'mixed',
+            teamSize: parsedForm?.teamSize || '1',
+          }),
         })
         
         if (response.ok) {
