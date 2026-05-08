@@ -32,3 +32,19 @@ The `/audit` results page currently throws a default export error because it has
 
 **Plan for tomorrow:**
 Build the audit results page with hero savings display, per-tool breakdown cards, and Groq AI summary integration.
+
+## Day 3 — 2026-05-09
+
+**Hours worked:** 4
+
+**What I did:**
+Morning: Built the audit results page with hero savings display, per-tool breakdown cards with severity badges, progress bar, stats row, and share button.
+
+**What I learned:**
+Next.js 16 requires named exports for HTTP methods in Route Handlers (GET, POST, etc.) rather than a default export, which is a key change from previous versions. Also, Tailwind's `items-start` is essential for preventing vertical stretching in dynamic grid layouts.
+
+**Blockers / what I'm stuck on:**
+The `/api/summary` route currently fails because it lacks the required named exports for the new Next.js version. This will be the first thing to fix tomorrow.
+
+**Plan for tomorrow:**
+Build Groq AI summary API route, email capture modal, Supabase backend and shareable URLs.
