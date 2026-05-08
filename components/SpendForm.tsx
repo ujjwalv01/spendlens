@@ -167,14 +167,14 @@ export default function SpendForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Honeypot */}
-      <input 
-        type="text" 
-        name="website" 
-        style={{display: 'none'}} 
+      <input
+        type="text"
+        name="website"
+        style={{ display: 'none' }}
         tabIndex={-1}
         autoComplete="off"
         value={formState.honeypot}
-        onChange={(e) => setFormState({...formState, honeypot: e.target.value})}
+        onChange={(e) => setFormState({ ...formState, honeypot: e.target.value })}
       />
 
       <div className="space-y-4">
@@ -188,11 +188,10 @@ export default function SpendForm() {
             return (
               <div
                 key={tool.toolId}
-                className={`transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? 'bg-slate-800 border-emerald-400 ring-1 ring-emerald-400/50'
-                    : 'bg-slate-800 border-slate-700 hover:border-slate-600'
-                } border rounded-xl p-4`}
+                className={`transition-all duration-200 cursor-pointer ${isSelected
+                  ? 'bg-slate-800 border-emerald-400 ring-1 ring-emerald-400/50'
+                  : 'bg-slate-800 border-slate-700 hover:border-slate-600'
+                  } border rounded-xl p-4`}
                 onClick={() => toggleTool(tool.toolId)}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -264,34 +263,48 @@ export default function SpendForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="text-slate-300 text-sm mb-2 block font-medium">Total Team Size</label>
-            <select
-              className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none"
-              value={formState.teamSize}
-              onChange={(e) => setFormState({ ...formState, teamSize: e.target.value })}
-            >
-              <option value="">Select size...</option>
-              <option value="1">1 (Solo)</option>
-              <option value="2-5">2-5 members</option>
-              <option value="6-10">6-10 members</option>
-              <option value="11-50">11-50 members</option>
-              <option value="51-200">51-200 members</option>
-              <option value="200+">200+ members</option>
-            </select>
+            <div className="relative">
+              <select
+                className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10"
+                value={formState.teamSize}
+                onChange={(e) => setFormState({ ...formState, teamSize: e.target.value })}
+              >
+                <option value="">Select size...</option>
+                <option value="1">1 (Solo)</option>
+                <option value="2-5">2-5 members</option>
+                <option value="6-10">6-10 members</option>
+                <option value="11-50">11-50 members</option>
+                <option value="51-200">51-200 members</option>
+                <option value="200+">200+ members</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
           <div>
             <label className="text-slate-300 text-sm mb-2 block font-medium">Primary AI Use Case</label>
-            <select
-              className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none"
-              value={formState.useCase}
-              onChange={(e) => setFormState({ ...formState, useCase: e.target.value })}
-            >
-              <option value="">Select use case...</option>
-              <option value="coding">Software Development (Coding)</option>
-              <option value="writing">Content & Copywriting</option>
-              <option value="data">Data Analysis</option>
-              <option value="research">Research & Strategy</option>
-              <option value="mixed">General Purpose / Mixed</option>
-            </select>
+            <div className="relative">
+              <select
+                className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10"
+                value={formState.useCase}
+                onChange={(e) => setFormState({ ...formState, useCase: e.target.value })}
+              >
+                <option value="">Select use case...</option>
+                <option value="coding">Software Development (Coding)</option>
+                <option value="writing">Content & Copywriting</option>
+                <option value="data">Data Analysis</option>
+                <option value="research">Research & Strategy</option>
+                <option value="mixed">General Purpose / Mixed</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -308,7 +321,7 @@ export default function SpendForm() {
               Analyzing your spend...
             </>
           ) : (
-            'Audit My Spend →'
+            'Audit My Spend'
           )}
         </button>
         {error && <p className="text-red-400 text-sm mt-3 text-center animate-bounce">{error}</p>}
