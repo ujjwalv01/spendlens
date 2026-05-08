@@ -243,14 +243,9 @@ export default function SpendForm() {
                         <input
                           type="number"
                           className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white w-full text-sm"
-                          value={toolState.monthlySpend || ''}
+                          value={toolState.monthlySpend}
                           onChange={(e) => updateToolField(tool.toolId, 'monthlySpend', parseFloat(e.target.value) || 0)}
                         />
-                        {(toolState.monthlySpend === 0 || !toolState.monthlySpend) && (
-                          <p className="text-yellow-400 text-[10px] mt-1 font-medium italic">
-                            ⚠️ Enter your actual spend for accurate results
-                          </p>
-                        )}
                       </div>
                     </div>
                   </div>
