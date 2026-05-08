@@ -35,16 +35,18 @@ Build the audit results page with hero savings display, per-tool breakdown cards
 
 ## Day 3 — 2026-05-09
 
-**Hours worked:** 4
+**Hours worked:** 8
 
 **What I did:**
-Morning: Built the audit results page with hero savings display, per-tool breakdown cards with severity badges, progress bar, stats row, and share button.
+Morning: Built audit results page with hero savings, per-tool breakdown cards, progress bar and stats row.
+Night: Built Groq AI summary API route with fallback, connected it to results page, built email capture modal with honeypot protection.
 
 **What I learned:**
-Next.js 16 requires named exports for HTTP methods in Route Handlers (GET, POST, etc.) rather than a default export, which is a key change from previous versions. Also, Tailwind's `items-start` is essential for preventing vertical stretching in dynamic grid layouts.
+Groq's Llama 3.3 model is incredibly fast for concise summarization. Implementing a 10s timeout with AbortController and a static fallback ensures the UI never feels broken even if the AI service lags.
 
 **Blockers / what I'm stuck on:**
-The `/api/summary` route currently fails because it lacks the required named exports for the new Next.js version. This will be the first thing to fix tomorrow.
+The `/api/leads` endpoint is currently a mock; I need to set up Supabase and Resend to handle the actual data persistence and email delivery.
 
 **Plan for tomorrow:**
-Build Groq AI summary API route, email capture modal, Supabase backend and shareable URLs.
+Build Supabase backend, leads API route, transactional email with Resend, and shareable URLs.
+
