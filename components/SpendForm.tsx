@@ -1,6 +1,6 @@
 'use client'
 
-import { TOOLS, AuditInput, Tool, Plan } from '@/lib/pricingData'
+import { TOOLS, AuditInput } from '@/lib/pricingData'
 import { runAudit } from '@/lib/auditEngine'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
@@ -44,15 +44,18 @@ export default function SpendForm() {
 
   // Load from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('spendlens-form')
-    if (saved) {
-      try {
-        setFormState(JSON.parse(saved))
-      } catch (e) {
-        console.error('Failed to parse saved form state')
+    const loadSaved = async () => {
+      const saved = localStorage.getItem('spendlens-form')
+      if (saved) {
+        try {
+          setFormState(JSON.parse(saved))
+        } catch {
+          console.error('Failed to parse saved form state')
+        }
       }
+      setIsLoaded(true)
     }
-    setIsLoaded(true)
+    loadSaved()
   }, [])
 
   // Save to localStorage
@@ -78,7 +81,7 @@ export default function SpendForm() {
   const updateToolField = (
     toolId: string,
     field: keyof ToolState,
-    value: any
+    value: string | number | boolean
   ) => {
     setFormState((prev) => {
       const tool = TOOLS.find((t) => t.toolId === toolId)
@@ -87,9 +90,9 @@ export default function SpendForm() {
 
       // Auto-update monthlySpend if plan or seats change
       if (field === 'planId' || field === 'seats') {
-        const selectedPlan = tool?.plans.find((p) => p.planId === newState.planId)
+        const selectedPlan = tool?.plans.find((p) => p.planId === newState.planId as string)
         if (selectedPlan) {
-          newState.monthlySpend = selectedPlan.pricePerUserPerMonth * newState.seats
+          newState.monthlySpend = selectedPlan.pricePerUserPerMonth * (newState.seats as number)
         }
       }
 
@@ -111,7 +114,7 @@ export default function SpendForm() {
     if (formState.honeypot) return
 
     const selectedTools = Object.entries(formState.selectedTools)
-      .filter(([_, state]) => state.selected)
+      .filter(([, state]) => state.selected)
       .map(([id, state]) => ({ toolId: id, ...state }))
 
     // Validation
@@ -149,7 +152,7 @@ export default function SpendForm() {
       planId: t.planId,
       seats: t.seats,
       monthlySpend: t.monthlySpend,
-      useCase: formState.useCase as any,
+      useCase: formState.useCase as 'coding' | 'writing' | 'data' | 'research' | 'mixed',
     }))
 
     // Run audit
@@ -179,7 +182,7 @@ export default function SpendForm() {
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-emerald-400">1. Select your tools</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
           {TOOLS.map((tool) => {
             const isSelected = formState.selectedTools[tool.toolId].selected
             const toolState = formState.selectedTools[tool.toolId]

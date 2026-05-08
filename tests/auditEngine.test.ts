@@ -1,4 +1,4 @@
-import { runAudit, getTotalSavings } from '@/lib/auditEngine'
+import { runAudit } from '@/lib/auditEngine'
 import { AuditInput } from '@/lib/pricingData'
 
 describe('auditEngine', () => {

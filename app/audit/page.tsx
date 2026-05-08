@@ -1,6 +1,6 @@
 'use client'
 
-import { AuditSummary, AuditResult } from '@/lib/auditEngine'
+import { AuditSummary } from '@/lib/auditEngine'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -13,38 +13,38 @@ export default function AuditPage() {
   const [copyFeedback, setCopyFeedback] = useState(false)
 
   useEffect(() => {
-    const savedAudit = localStorage.getItem('spendlens-audit')
-    const savedInputs = localStorage.getItem('spendlens-inputs')
+    const loadData = async () => {
+      const savedAudit = localStorage.getItem('spendlens-audit')
+      const savedInputs = localStorage.getItem('spendlens-inputs')
 
-    if (!savedAudit || !savedInputs) {
-      router.push('/')
-      return
-    }
+      if (!savedAudit || !savedInputs) {
+        router.push('/')
+        return
+      }
 
-    try {
-      const parsedAudit = JSON.parse(savedAudit)
-      setSummary(parsedAudit)
-      setIsLoaded(true)
+      try {
+        const parsedAudit = JSON.parse(savedAudit)
+        setSummary(parsedAudit)
+        setIsLoaded(true)
 
-      // Fetch AI Summary
-      fetch('/api/summary', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ audit: parsedAudit, inputs: JSON.parse(savedInputs) }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
+        // Fetch AI Summary
+        const response = await fetch('/api/summary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ audit: parsedAudit, inputs: JSON.parse(savedInputs) }),
+        })
+        
+        if (response.ok) {
+          const data = await response.json()
           setAiSummary(data.summary)
-          setIsAiLoading(false)
-        })
-        .catch((err) => {
-          console.error('AI summary fetch failed:', err)
-          setIsAiLoading(false)
-        })
-    } catch (e) {
-      console.error('Failed to parse audit data')
-      router.push('/')
+        }
+        setIsAiLoading(false)
+      } catch {
+        console.error('Failed to parse or fetch audit data')
+        setIsAiLoading(false)
+      }
     }
+    loadData()
   }, [router])
 
   const handleShare = () => {
@@ -91,7 +91,7 @@ export default function AuditPage() {
                 ${summary.totalMonthlySavings.toLocaleString()}/mo
               </div>
               <p className="text-xl text-slate-400">
-                That's <span className="text-white font-bold">${summary.totalAnnualSavings.toLocaleString()} per year</span> back in your pocket.
+                That&apos;s <span className="text-white font-bold">${summary.totalAnnualSavings.toLocaleString()} per year</span> back in your pocket.
               </p>
 
               {summary.totalMonthlySavings > 500 && (
@@ -112,9 +112,9 @@ export default function AuditPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h1 className="text-4xl font-black text-white">You're spending well</h1>
+              <h1 className="text-4xl font-black text-white">You&apos;re spending well</h1>
               <p className="text-slate-400 max-w-md mx-auto">
-                Your current AI stack looks optimized. We'll notify you when new savings apply to your toolset.
+                Your current AI stack looks optimized. We&apos;ll notify you when new savings apply to your toolset.
               </p>
             </>
           )}
@@ -219,7 +219,7 @@ export default function AuditPage() {
 
                 <div className="mt-6 pt-4 border-t border-slate-800/50">
                   <p className="text-slate-400 italic text-sm leading-relaxed">
-                    "{result.reason}"
+                    &quot;{result.reason}&quot;
                   </p>
                 </div>
               </div>

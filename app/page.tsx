@@ -25,7 +25,7 @@ export default function Home() {
           {/* Header Area */}
           <div className="space-y-6">
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
-              Find Out If You're <br />
+              Find Out If You&apos;re <br />
               <span className="bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">
                 Overpaying
               </span> for AI Tools

@@ -1,8 +1,5 @@
 import {
   AuditInput,
-  Tool,
-  Plan,
-  TOOLS,
   getToolById,
   getPlanById,
 } from '@/lib/pricingData'
@@ -53,24 +50,19 @@ export function runAudit(inputs: AuditInput[]): AuditSummary {
     const isTeamPlan =
       input.planId === 'team' || input.planId === 'teams'
     if (teamTools.includes(input.toolId) && isTeamPlan && input.seats === 1) {
-      let individualPlanId = ''
       let individualPrice = 0
       let individualName = ''
 
       if (input.toolId === 'claude') {
-        individualPlanId = 'pro'
         individualPrice = 20
         individualName = 'Pro'
       } else if (input.toolId === 'chatgpt') {
-        individualPlanId = 'plus'
         individualPrice = 20
         individualName = 'Plus'
       } else if (input.toolId === 'cursor') {
-        individualPlanId = 'pro'
         individualPrice = 20
         individualName = 'Pro'
       } else if (input.toolId === 'windsurf') {
-        individualPlanId = 'pro'
         individualPrice = 15
         individualName = 'Pro'
       }
