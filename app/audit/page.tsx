@@ -3,6 +3,7 @@
 import { AuditSummary } from '@/lib/auditEngine'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import EmailCapture from '@/components/EmailCapture'
 
 export default function AuditPage() {
   const router = useRouter()
@@ -11,7 +12,8 @@ export default function AuditPage() {
   const [isAI, setIsAI] = useState(false)
   const [isAiLoading, setIsAiLoading] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [copyFeedback, setCopyFeedback] = useState(false)
+  const [showEmailModal, setShowEmailModal] = useState(false)
+  const [shareSlug, setShareSlug] = useState<string | null>(null)
 
   useEffect(() => {
     const loadData = async () => {
@@ -29,7 +31,6 @@ export default function AuditPage() {
         const parsedInputs = JSON.parse(savedInputs)
         const parsedForm = savedForm ? JSON.parse(savedForm) : null
         
-        // Use inputs[0] for useCase and metadata if it's an array
         const inputsMeta = Array.isArray(parsedInputs) ? parsedInputs[0] : parsedInputs
 
         setSummary(parsedAudit)
@@ -44,7 +45,7 @@ export default function AuditPage() {
             totalMonthlySavings: parsedAudit.totalMonthlySavings,
             totalAnnualSavings: parsedAudit.totalAnnualSavings,
             useCase: inputsMeta?.useCase || 'mixed',
-            teamSize: parsedForm?.teamSize || 'unknown', // Getting from form since it's actually there
+            teamSize: parsedForm?.teamSize || 'unknown',
           }),
         })
         
@@ -62,12 +63,6 @@ export default function AuditPage() {
     loadData()
   }, [router])
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href)
-    setCopyFeedback(true)
-    setTimeout(() => setCopyFeedback(false), 2000)
-  }
-
   if (!isLoaded || !summary) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
@@ -84,6 +79,26 @@ export default function AuditPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30">
       <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in">
+        {/* Success Banner */}
+        {shareSlug && (
+          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center mb-6 animate-fade-in">
+            <p className="text-emerald-400 font-medium">
+              Report sent! Share your audit:
+            </p>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  window.location.origin + '/audit/' + shareSlug
+                )
+                alert('Link copied!')
+              }}
+              className="text-emerald-300 underline text-sm mt-1 hover:text-emerald-200 transition-colors"
+            >
+              {window.location.origin}/audit/{shareSlug}
+            </button>
+          </div>
+        )}
+
         {/* Header/Hero */}
         <div className="text-center space-y-4 py-8">
           {/* Progress Bar */}
@@ -171,7 +186,7 @@ export default function AuditPage() {
               <div className="h-4 bg-slate-800 rounded w-4/6" />
             </div>
           ) : aiSummary ? (
-            <p className="text-slate-300 leading-relaxed">
+            <p className="text-slate-300 leading-relaxed italic">
               {aiSummary}
             </p>
           ) : (
@@ -255,19 +270,13 @@ export default function AuditPage() {
         {/* Actions */}
         <div className="flex flex-col md:flex-row gap-4 pt-8 pb-20">
           <button
-            onClick={handleShare}
+            onClick={() => setShowEmailModal(true)}
             className="flex-1 border border-emerald-400/50 hover:bg-emerald-400/10 text-emerald-400 rounded-xl py-4 px-6 font-bold transition-all flex items-center justify-center gap-2"
           >
-            {copyFeedback ? (
-              'Link copied! ✓'
-            ) : (
-              <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Share this audit
-              </>
-            )}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Share this audit
           </button>
           <button
             onClick={() => router.push('/')}
@@ -279,6 +288,17 @@ export default function AuditPage() {
             Re-audit my stack
           </button>
         </div>
+
+        {/* Modals */}
+        <EmailCapture
+          isOpen={showEmailModal}
+          onClose={() => setShowEmailModal(false)}
+          totalMonthlySavings={summary?.totalMonthlySavings || 0}
+          onSuccess={(slug) => {
+            setShareSlug(slug)
+            setShowEmailModal(false)
+          }}
+        />
       </main>
     </div>
   )
