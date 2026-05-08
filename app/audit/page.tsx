@@ -8,6 +8,7 @@ export default function AuditPage() {
   const router = useRouter()
   const [summary, setSummary] = useState<AuditSummary | null>(null)
   const [aiSummary, setAiSummary] = useState<string | null>(null)
+  const [isAI, setIsAI] = useState(false)
   const [isAiLoading, setIsAiLoading] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
   const [copyFeedback, setCopyFeedback] = useState(false)
@@ -16,6 +17,7 @@ export default function AuditPage() {
     const loadData = async () => {
       const savedAudit = localStorage.getItem('spendlens-audit')
       const savedInputs = localStorage.getItem('spendlens-inputs')
+      const savedForm = localStorage.getItem('spendlens-form')
 
       if (!savedAudit || !savedInputs) {
         router.push('/')
@@ -24,12 +26,14 @@ export default function AuditPage() {
 
       try {
         const parsedAudit = JSON.parse(savedAudit)
+        const parsedInputs = JSON.parse(savedInputs)
+        const parsedForm = savedForm ? JSON.parse(savedForm) : null
+        
+        // Use inputs[0] for useCase and metadata if it's an array
+        const inputsMeta = Array.isArray(parsedInputs) ? parsedInputs[0] : parsedInputs
+
         setSummary(parsedAudit)
         setIsLoaded(true)
-
-        const parsedInputs = JSON.parse(savedInputs)
-        const savedForm = localStorage.getItem('spendlens-form')
-        const parsedForm = savedForm ? JSON.parse(savedForm) : null
 
         // Fetch AI Summary
         const response = await fetch('/api/summary', {
@@ -39,14 +43,15 @@ export default function AuditPage() {
             auditResults: parsedAudit.results,
             totalMonthlySavings: parsedAudit.totalMonthlySavings,
             totalAnnualSavings: parsedAudit.totalAnnualSavings,
-            useCase: parsedInputs[0]?.useCase || 'mixed',
-            teamSize: parsedForm?.teamSize || '1',
+            useCase: inputsMeta?.useCase || 'mixed',
+            teamSize: parsedForm?.teamSize || 'unknown', // Getting from form since it's actually there
           }),
         })
         
         if (response.ok) {
           const data = await response.json()
           setAiSummary(data.summary)
+          setIsAI(data.isAI)
         }
         setIsAiLoading(false)
       } catch {
@@ -148,9 +153,17 @@ export default function AuditPage() {
 
         {/* AI Summary Card */}
         <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl">
-          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <span className="text-emerald-400">✨</span> Your Personalized Audit Summary
-          </h2>
+          <div className="flex justify-between items-start mb-4">
+            <h2 className="text-lg font-bold flex items-center gap-2">
+              <span className="text-emerald-400">✨</span> Your Personalized Audit Summary
+            </h2>
+            {!isAiLoading && aiSummary && (
+              <span className={`text-xs px-2 py-1 rounded-full ${isAI ? 'text-emerald-400 bg-emerald-400/10' : 'text-slate-500 bg-slate-800'}`}>
+                {isAI ? 'AI Generated' : 'Template Summary'}
+              </span>
+            )}
+          </div>
+          
           {isAiLoading ? (
             <div className="animate-pulse space-y-3">
               <div className="h-4 bg-slate-800 rounded w-full" />
@@ -158,9 +171,11 @@ export default function AuditPage() {
               <div className="h-4 bg-slate-800 rounded w-4/6" />
             </div>
           ) : aiSummary ? (
-            <p className="text-slate-300 leading-relaxed italic">{aiSummary}</p>
+            <p className="text-slate-300 leading-relaxed">
+              {aiSummary}
+            </p>
           ) : (
-            <p className="text-slate-500 text-sm italic">
+            <p className="text-slate-400 text-sm italic">
               Unable to generate AI summary. See your breakdown below.
             </p>
           )}
