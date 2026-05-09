@@ -8,8 +8,8 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
 export type AuditRecord = {
   id?: string
   slug: string
-  tools_data: any
-  savings_data: any
+  tools_data: Record<string, unknown>[]
+  savings_data: Record<string, unknown>
   use_case: string
   team_size: string
   created_at?: string
