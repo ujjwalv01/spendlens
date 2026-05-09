@@ -35,7 +35,7 @@ Build the audit results page with hero savings display, per-tool breakdown cards
 
 ## Day 3 — 2026-05-09
 
-**Hours worked:** 4
+**Hours worked:** 8
 
 **What I did:**
 Morning: Built audit results page with hero savings, per-tool breakdown cards, progress bar and stats row.
@@ -50,3 +50,18 @@ The `/api/leads` endpoint is currently a mock; I need to set up Supabase and Res
 **Plan for tomorrow:**
 Build Supabase backend, leads API route, transactional email with Resend, and shareable URLs.
 
+## Day 4 — 2026-05-10
+
+**Hours worked:** 6
+
+**What I did:**
+Set up Supabase with audits and leads tables. Built leads API with rate limiting, honeypot protection, Resend transactional email, and slug generation. Built public shareable audit page with dynamic Open Graph tags for viral sharing.
+
+**What I learned:**
+Next.js 16 Server Components make building public, SEO-friendly pages incredibly efficient. Using `generateMetadata` to fetch database records allows for extremely personalized social media previews that drive significantly higher engagement.
+
+**Blockers / what I'm stuck on:**
+Database security policies (RLS) in Supabase need to be carefully configured to allow public read access for audits by slug while keeping lead information strictly private.
+
+**Plan for tomorrow:**
+Deploy to Vercel, fix Lighthouse scores, write GTM, ECONOMICS and other docs.
