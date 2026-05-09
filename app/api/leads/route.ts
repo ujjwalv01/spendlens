@@ -3,12 +3,35 @@ import { supabase } from '@/lib/supabase'
 import { Resend } from 'resend'
 import { nanoid } from 'nanoid'
 
+type AuditResult = {
+  toolName: string
+  currentMonthlySpend: number
+  recommendedAction: string
+  monthlySavings: number
+  severity: string
+  reason: string
+}
+
+type LeadRequestBody = {
+  email: string
+  companyName?: string
+  role?: string
+  honeypot?: string
+  auditData: {
+    results: AuditResult[]
+    totalMonthlySavings: number
+    totalAnnualSavings: number
+  }
+  useCase?: string
+  teamSize?: string
+}
+
 // Simple rate limiting map (persists in memory per server instance)
 const rateLimitMap = new Map<string, number[]>()
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const body: LeadRequestBody = await request.json()
     const {
       email,
       companyName,
@@ -73,7 +96,6 @@ export async function POST(request: NextRequest) {
 
     if (leadError) {
       console.error('Supabase Lead Error:', leadError)
-      // We continue even if lead saving fails? No, let's throw.
       throw new Error('Failed to save lead data')
     }
 
@@ -84,8 +106,8 @@ export async function POST(request: NextRequest) {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
       const top3 = auditData.results
-        .filter((r: any) => r.monthlySavings > 0)
-        .sort((a: any, b: any) => b.monthlySavings - a.monthlySavings)
+        .filter((r) => r.monthlySavings > 0)
+        .sort((a, b) => b.monthlySavings - a.monthlySavings)
         .slice(0, 3)
 
       try {
@@ -106,7 +128,7 @@ export async function POST(request: NextRequest) {
               <h3>Top Recommendations:</h3>
               ${top3
                 .map(
-                  (r: any) => `
+                  (r) => `
                 <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #10b981;">
                   <strong>${r.toolName}</strong><br/>
                   ${r.recommendedAction}<br/>
@@ -144,7 +166,6 @@ export async function POST(request: NextRequest) {
         })
       } catch (emailError) {
         console.error('Email sending failed:', emailError)
-        // We don't crash the whole request if email fails, but we log it.
       }
     }
 
