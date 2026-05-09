@@ -6,6 +6,19 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
+type SavingsData = {
+  totalMonthlySavings: number
+  totalAnnualSavings: number
+}
+
+type ToolAuditResult = {
+  toolName: string
+  recommendedAction: string
+  monthlySavings: number
+  severity: 'high' | 'medium' | 'optimal'
+  reason: string
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const { data: audit } = await supabase
@@ -14,8 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .eq('slug', slug)
     .single()
 
-  const savings = (audit?.savings_data as any) || {}
-  const monthly = savings?.totalMonthlySavings || 0
+  const savings = (audit?.savings_data as unknown as SavingsData) || {
+    totalMonthlySavings: 0,
+    totalAnnualSavings: 0,
+  }
+  const monthly = savings.totalMonthlySavings || 0
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://spendlens.vercel.app'
 
   return {
@@ -42,7 +58,7 @@ export default async function SharedAuditPage({ params }: Props) {
     .from('audits')
     .select('*')
     .eq('slug', slug)
-    .single()) as { data: AuditRecord | null; error: any }
+    .single()) as { data: AuditRecord | null; error: unknown }
 
   if (error || !audit) {
     return (
@@ -63,8 +79,11 @@ export default async function SharedAuditPage({ params }: Props) {
     )
   }
 
-  const savings = (audit.savings_data as any) || {}
-  const tools = (audit.tools_data as any[]) || []
+  const savings = (audit.savings_data as unknown as SavingsData) || {
+    totalMonthlySavings: 0,
+    totalAnnualSavings: 0,
+  }
+  const tools = (audit.tools_data as unknown as ToolAuditResult[]) || []
   const hasSavings = savings.totalMonthlySavings > 0
 
   return (
