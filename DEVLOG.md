@@ -65,3 +65,19 @@ Database security policies (RLS) in Supabase need to be carefully configured to 
 
 **Plan for tomorrow:**
 Deploy to Vercel, fix Lighthouse scores, write GTM, ECONOMICS and other docs.
+
+## Day 5 — 2026-05-11
+
+**Hours worked:** 3
+
+**What I did:**
+Deployed SpendLens to Vercel. Wrote GTM.md, ECONOMICS.md, LANDING_COPY.md, METRICS.md, and ARCHITECTURE.md with full detail. Handled rebranding adjustments to ensure consistent partner mentions across the codebase.
+
+**What I learned:**
+Maintaining documentation consistency is as important as the code itself when building for a partner ecosystem. Rebranding or adjusting partner mentions (like Credex) mid-build requires a systematic approach to avoid broken links or confusing user experiences in the conversion funnel.
+
+**Blockers / what I'm stuck on:**
+Lighthouse performance optimization for the audit results page; the heavy client-side calculation and AI summary fetch need careful orchestration to keep the LCP low.
+
+**Plan for tomorrow:**
+Write user interviews, REFLECTION.md, finalize README, fix any remaining issues, and run a final Lighthouse audit.
