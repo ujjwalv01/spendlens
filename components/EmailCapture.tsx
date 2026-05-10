@@ -178,13 +178,13 @@ export default function EmailCapture({
                 'Email me the report →'
               )}
             </button>
-            
+
             {error && (
               <p className="text-red-400 text-xs mt-3 text-center animate-pulse">
                 {error}
               </p>
             )}
-            
+
             <p className="text-slate-500 text-[10px] text-center mt-4 uppercase tracking-widest font-medium">
               No spam. Credex may reach out for high-savings audits.
             </p>

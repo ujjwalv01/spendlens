@@ -127,8 +127,8 @@ export async function POST(request: NextRequest) {
               </p>
               <h3>Top Recommendations:</h3>
               ${top3
-                .map(
-                  (r) => `
+              .map(
+                (r) => `
                 <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #10b981;">
                   <strong>${r.toolName}</strong><br/>
                   ${r.recommendedAction}<br/>
@@ -138,19 +138,18 @@ export async function POST(request: NextRequest) {
                   <small style="color: #64748b;">${r.reason}</small>
                 </div>
               `
-                )
-                .join('')}
-              ${
-                auditData.totalMonthlySavings > 500
-                  ? `
+              )
+              .join('')}
+              ${auditData.totalMonthlySavings > 500
+              ? `
                 <div style="background: #ecfdf5; padding: 16px; border-radius: 8px; margin-top: 24px;">
                   <strong>🚀 You qualify for a Credex consultation!</strong>
                   <p>Your savings potential is significant. A Credex advisor will reach out shortly to help you capture these savings through discounted AI credits.</p>
                   <a href="https://credex.rocks" style="color: #10b981; font-weight: bold;">Learn more about Credex →</a>
                 </div>
               `
-                  : ''
-              }
+              : ''
+            }
               <p style="margin-top: 24px; color: #64748b;">
                 View your full audit at:<br/>
                 <a href="${appUrl}/audit/${slug}" style="color: #10b981;">

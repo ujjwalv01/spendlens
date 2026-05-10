@@ -29,7 +29,7 @@ export default function AuditPage() {
         const parsedAudit = JSON.parse(savedAudit)
         const parsedInputs = JSON.parse(savedInputs)
         const parsedForm = savedForm ? JSON.parse(savedForm) : null
-        
+
         const inputsMeta = Array.isArray(parsedInputs) ? parsedInputs[0] : parsedInputs
 
         setSummary(parsedAudit)
@@ -47,7 +47,7 @@ export default function AuditPage() {
             teamSize: parsedForm?.teamSize || 'unknown',
           }),
         })
-        
+
         if (response.ok) {
           const data = await response.json()
           setAiSummary(data.summary)
@@ -102,7 +102,7 @@ export default function AuditPage() {
           {/* Progress Bar */}
           <div className="max-w-md mx-auto mb-10">
             <div className="w-full bg-slate-800 rounded-full h-2 mb-3">
-              <div 
+              <div
                 className="bg-emerald-400 h-2 rounded-full transition-all duration-1000 ease-out"
                 style={{ width: percentage + '%' }}
               />
@@ -172,7 +172,7 @@ export default function AuditPage() {
               Your Personalized Audit Summary
             </h2>
           </div>
-          
+
           {isAiLoading ? (
             <div className="animate-pulse space-y-3">
               <div className="h-4 bg-slate-800 rounded w-full" />
@@ -206,19 +206,18 @@ export default function AuditPage() {
                 <div className="flex justify-between items-start mb-6">
                   <h3 className="text-white font-bold text-xl">{result.toolName}</h3>
                   <span
-                    className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full ${
-                      result.severity === 'high'
+                    className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full ${result.severity === 'high'
                         ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                         : result.severity === 'medium'
-                        ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                        : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                    }`}
+                          ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
+                          : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      }`}
                   >
                     {result.severity === 'high'
                       ? 'High Savings'
                       : result.severity === 'medium'
-                      ? 'Some Savings'
-                      : 'Optimized ✓'}
+                        ? 'Some Savings'
+                        : 'Optimized ✓'}
                   </span>
                 </div>
 
