@@ -64,7 +64,7 @@ export default function AuditPage() {
   if (!isLoaded || !summary) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-400" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500" />
       </div>
     )
   }
@@ -79,8 +79,8 @@ export default function AuditPage() {
       <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in relative z-10">
         {/* Success Banner */}
         {shareSlug && (
-          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center mb-6 animate-fade-in">
-            <p className="text-emerald-400 font-medium">
+          <div className="bg-violet-500/10 border border-violet-500/30 rounded-xl p-4 text-center mb-6 animate-fade-in">
+            <p className="text-violet-300 font-medium">
               Report sent! Share your audit:
             </p>
             <button
@@ -90,7 +90,7 @@ export default function AuditPage() {
                 )
                 alert('Link copied!')
               }}
-              className="text-emerald-300 underline text-sm mt-1 hover:text-emerald-200 transition-colors"
+              className="text-violet-300 underline text-sm mt-1 hover:text-violet-200 transition-colors"
             >
               {window.location.origin}/audit/{shareSlug}
             </button>
@@ -103,22 +103,22 @@ export default function AuditPage() {
           <div className="max-w-md mx-auto mb-10">
             <div className="w-full bg-slate-800 rounded-full h-2 mb-3">
               <div
-                className="bg-emerald-400 h-2 rounded-full transition-all duration-1000 ease-out"
+                className="bg-violet-500 h-2 rounded-full transition-all duration-1000 ease-out"
                 style={{ width: percentage + '%' }}
               />
             </div>
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">
+            <p className="text-purple-300/60 text-xs uppercase tracking-widest text-center mb-8">
               {optimizedCount} of {totalCount} tools already optimized ({percentage}%)
             </p>
           </div>
 
           {hasSavings ? (
             <>
-              <h1 className="text-2xl font-bold text-slate-300">You could save</h1>
-              <div className="bg-gradient-to-r from-purple-400 to-emerald-400 bg-clip-text text-transparent text-6xl md:text-8xl font-black tracking-tighter">
+              <h1 className="text-purple-200 text-xl font-medium uppercase tracking-widest mb-2">You could save</h1>
+              <div className="text-6xl md:text-8xl font-black text-white drop-shadow-lg">
                 ${summary.totalMonthlySavings.toLocaleString()}/mo
               </div>
-              <p className="text-xl text-slate-400">
+              <p className="text-purple-200/80 text-lg mt-3">
                 That&apos;s <span className="text-white font-bold">${summary.totalAnnualSavings.toLocaleString()} per year</span> back in your pocket.
               </p>
 
@@ -135,8 +135,8 @@ export default function AuditPage() {
             </>
           ) : (
             <>
-              <div className="inline-block p-3 bg-emerald-500/10 rounded-2xl mb-4">
-                <svg className="w-12 h-12 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="inline-block p-3 bg-violet-500/10 rounded-2xl mb-4">
+                <svg className="w-12 h-12 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -150,24 +150,23 @@ export default function AuditPage() {
           {/* Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
             <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
-              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Tools Audited</p>
-              <p className="text-white text-2xl font-black">{totalCount}</p>
+              <p className="text-purple-300/60 text-xs uppercase tracking-widest mb-1">Tools Audited</p>
+              <p className="text-white font-black text-2xl">{totalCount}</p>
             </div>
             <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
-              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Monthly Savings</p>
-              <p className="text-emerald-400 text-2xl font-black">${summary.totalMonthlySavings.toLocaleString()}</p>
+              <p className="text-purple-300/60 text-xs uppercase tracking-widest mb-1">Monthly Savings</p>
+              <p className="text-violet-300 font-black text-2xl">${summary.totalMonthlySavings.toLocaleString()}</p>
             </div>
             <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
-              <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Annual Savings</p>
-              <p className="text-emerald-400 text-2xl font-black">${summary.totalAnnualSavings.toLocaleString()}</p>
+              <p className="text-purple-300/60 text-xs uppercase tracking-widest mb-1">Annual Savings</p>
+              <p className="text-violet-300 font-black text-2xl">${summary.totalAnnualSavings.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
         {/* AI Summary Card */}
         <section className="bg-[#1a1135] border-l-4 border-l-purple-500 rounded-xl p-8 shadow-xl">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-2xl">✨</span>
+          <div className="mb-6">
             <h2 className="text-white font-bold text-xl">
               Your Personalized Audit Summary
             </h2>
@@ -207,10 +206,10 @@ export default function AuditPage() {
                   <h3 className="text-white font-bold text-xl">{result.toolName}</h3>
                   <span
                     className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full ${result.severity === 'high'
-                        ? 'bg-red-900/30 text-red-400 border border-red-800/40'
-                        : result.severity === 'medium'
-                          ? 'bg-yellow-900/30 text-yellow-400 border border-yellow-800/40'
-                          : 'bg-purple-900/30 text-purple-400 border border-purple-800/40'
+                      ? 'bg-red-900/30 text-red-300 border border-red-700/40'
+                      : result.severity === 'medium'
+                        ? 'bg-orange-900/30 text-orange-300 border border-orange-700/40'
+                        : 'bg-violet-900/30 text-violet-300 border border-violet-700/40'
                       }`}
                   >
                     {result.severity === 'high'
@@ -238,15 +237,15 @@ export default function AuditPage() {
                   </div>
 
                   <div className="md:text-right">
-                    <p className="text-emerald-400 text-xs uppercase font-bold tracking-wider mb-1">Recommended</p>
+                    <p className="text-violet-300 text-xs uppercase font-bold tracking-wider mb-1">Recommended</p>
                     {result.severity === 'optimal' ? (
-                      <p className="text-emerald-400 font-bold">Stay on current plan</p>
+                      <p className="text-violet-300 font-bold">Stay on current plan</p>
                     ) : (
                       <>
                         <p className="text-white text-lg font-bold">
                           {result.recommendedAction}
                         </p>
-                        <p className="text-emerald-400 font-bold text-sm">
+                        <p className="text-violet-300 font-bold text-sm">
                           ${result.monthlySavings} saved/mo
                         </p>
                       </>
@@ -273,7 +272,7 @@ export default function AuditPage() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
-            Share this audit
+            Export my audit
           </button>
           <button
             onClick={() => router.push('/')}
@@ -286,17 +285,18 @@ export default function AuditPage() {
           </button>
         </div>
 
-        {/* Modals */}
-        <EmailCapture
-          isOpen={showEmailModal}
-          onClose={() => setShowEmailModal(false)}
-          totalMonthlySavings={summary?.totalMonthlySavings || 0}
-          onSuccess={(slug) => {
-            setShareSlug(slug)
-            setShowEmailModal(false)
-          }}
-        />
       </main>
+
+      {/* Modals */}
+      <EmailCapture
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
+        totalMonthlySavings={summary?.totalMonthlySavings || 0}
+        onSuccess={(slug) => {
+          setShareSlug(slug)
+          setShowEmailModal(false)
+        }}
+      />
     </div>
   )
 }

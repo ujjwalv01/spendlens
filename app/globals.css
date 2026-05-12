@@ -20,10 +20,10 @@
 }
 
 body {
-  background-color: #080612;
+  background-color: #0c0817;
   background-image: 
-    radial-gradient(ellipse at 20% 50%, rgba(120, 40, 200, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(100, 20, 180, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(120, 40, 200, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(100, 20, 180, 0.03) 0%, transparent 50%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: white;
