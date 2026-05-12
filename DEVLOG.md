@@ -81,3 +81,19 @@ Lighthouse performance optimization for the audit results page; the heavy client
 
 **Plan for tomorrow:**
 Write user interviews, REFLECTION.md, finalize README, fix any remaining issues, and run a final Lighthouse audit.
+
+## Day 6 — 2026-05-12
+
+**Hours worked:** 3
+
+**What I did:**
+Deployed to Vercel. Fixed Lighthouse accessibility and performance issues. Completed PROMPTS.md, TESTS.md, and README.md. All docs now complete except REFLECTION and USER_INTERVIEWS which need real content.
+
+**What I learned:**
+Fixing accessibility in Next.js requires close attention to form element linking (htmlFor/id) and ensuring that elements inside transformed containers (like animated fading elements) don't break CSS fixed positioning, which I encountered with the email capture modal.
+
+**Blockers / what I'm stuck on:**
+None right now. The main technical pieces are done, but capturing the final screenshots and making sure the live Vercel URL works flawlessly is the last hurdle.
+
+**Plan for tomorrow:**
+Write REFLECTION.md answers, finalize USER_INTERVIEWS.md, take screenshots, do final check and submit.
