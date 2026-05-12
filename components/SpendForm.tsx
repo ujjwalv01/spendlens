@@ -181,8 +181,8 @@ export default function SpendForm() {
       />
 
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-emerald-400">1. Select your tools</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+        <h2 className="text-purple-300 font-bold text-lg mb-4">1. Select your tools</h2>
+        <div className="flex flex-col gap-3">
           {TOOLS.map((tool) => {
             const isSelected = formState.selectedTools[tool.toolId].selected
             const toolState = formState.selectedTools[tool.toolId]
@@ -191,10 +191,10 @@ export default function SpendForm() {
             return (
               <div
                 key={tool.toolId}
-                className={`transition-all duration-200 cursor-pointer ${isSelected
-                  ? 'bg-slate-800 border-emerald-400 ring-1 ring-emerald-400/50'
-                  : 'bg-slate-800 border-slate-700 hover:border-slate-600'
-                  } border rounded-xl p-4`}
+                className={`transition-all duration-200 cursor-pointer rounded-xl p-4 ${isSelected
+                  ? 'border-l-4 border-l-purple-500 border border-purple-500/50 bg-purple-900/20 shadow-lg shadow-purple-900/30'
+                  : 'bg-[#160d30] border border-purple-900/40 hover:border-purple-600/60'
+                  }`}
                 onClick={() => toggleTool(tool.toolId)}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -202,7 +202,7 @@ export default function SpendForm() {
                     <h3 className="font-bold text-white">{tool.toolName}</h3>
                     <p className="text-xs text-slate-400">From ${minPrice}/mo</p>
                   </div>
-                  <div className={`w-5 h-5 rounded border ${isSelected ? 'bg-emerald-500 border-emerald-500' : 'border-slate-600'} flex items-center justify-center`}>
+                  <div className={`w-5 h-5 rounded border ${isSelected ? 'bg-purple-500 border-purple-500' : 'border-purple-800/50'} flex items-center justify-center`}>
                     {isSelected && (
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-black" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -211,12 +211,12 @@ export default function SpendForm() {
                   </div>
                 </div>
 
-                {isSelected && (
-                  <div className="mt-4 space-y-4 pt-4 border-t border-slate-700" onClick={(e) => e.stopPropagation()}>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isSelected ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                  <div className="space-y-4 pt-4 border-t border-purple-800/40" onClick={(e) => e.stopPropagation()}>
                     <div>
                       <label className="text-slate-300 text-xs mb-1 block">Plan</label>
                       <select
-                        className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white w-full appearance-none text-sm"
+                        className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
                         value={toolState.planId}
                         onChange={(e) => updateToolField(tool.toolId, 'planId', e.target.value)}
                       >
@@ -233,7 +233,7 @@ export default function SpendForm() {
                         <input
                           type="number"
                           min="1"
-                          className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white w-full text-sm"
+                          className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
                           value={toolState.seats}
                           onChange={(e) => updateToolField(tool.toolId, 'seats', parseInt(e.target.value) || 1)}
                         />
@@ -242,28 +242,28 @@ export default function SpendForm() {
                         <label className="text-slate-300 text-xs mb-1 block">Monthly Spend ($)</label>
                         <input
                           type="number"
-                          className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white w-full text-sm"
+                          className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
                           value={toolState.monthlySpend}
                           onChange={(e) => updateToolField(tool.toolId, 'monthlySpend', parseFloat(e.target.value) || 0)}
                         />
                       </div>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             )
           })}
         </div>
       </div>
 
-      <div className="space-y-6 pt-6 border-t border-slate-800">
-        <h2 className="text-xl font-semibold text-emerald-400">2. About your team</h2>
+      <div className="space-y-6 pt-6 border-t border-purple-800/40">
+        <h2 className="text-purple-300 font-bold text-lg mb-4">2. About your team</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="text-slate-300 text-sm mb-2 block font-medium">Total Team Size</label>
             <div className="relative">
               <select
-                className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10"
+                className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30"
                 value={formState.teamSize}
                 onChange={(e) => setFormState({ ...formState, teamSize: e.target.value })}
               >
@@ -276,7 +276,7 @@ export default function SpendForm() {
                 <option value="200+">200+ members</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -286,7 +286,7 @@ export default function SpendForm() {
             <label className="text-slate-300 text-sm mb-2 block font-medium">Primary AI Use Case</label>
             <div className="relative">
               <select
-                className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10"
+                className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30"
                 value={formState.useCase}
                 onChange={(e) => setFormState({ ...formState, useCase: e.target.value })}
               >
@@ -298,7 +298,7 @@ export default function SpendForm() {
                 <option value="mixed">General Purpose / Mixed</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -311,7 +311,7 @@ export default function SpendForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all text-black font-bold py-4 px-8 rounded-xl w-full text-lg shadow-lg shadow-emerald-500/20 flex items-center justify-center"
+          className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-white font-bold py-4 rounded-xl w-full text-lg shadow-lg shadow-purple-900/50 flex items-center justify-center"
         >
           {isLoading ? (
             <>

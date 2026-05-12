@@ -74,8 +74,8 @@ export default function EmailCapture({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 max-w-md w-full relative shadow-2xl animate-fade-in">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-[#1a1135] border border-purple-700/50 rounded-2xl p-8 max-w-md w-full relative shadow-2xl shadow-purple-900/40 animate-fade-in">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-xl p-2"
@@ -84,8 +84,8 @@ export default function EmailCapture({
         </button>
 
         <div className="text-center mb-8">
-          <div className="inline-block p-3 bg-emerald-500/10 rounded-xl mb-4">
-            <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="inline-block p-3 bg-purple-500/10 rounded-xl mb-4">
+            <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
@@ -105,7 +105,7 @@ export default function EmailCapture({
               required
               type="email"
               placeholder="you@company.com"
-              className="bg-slate-800 border border-slate-700 rounded-lg p-3 text-white w-full focus:border-emerald-400 focus:outline-none transition-all placeholder:text-slate-500"
+              className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none transition-all placeholder:text-slate-500 focus:ring-1 focus:ring-purple-500/30"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -119,7 +119,7 @@ export default function EmailCapture({
             <input
               type="text"
               placeholder="Acme Inc."
-              className="bg-slate-800 border border-slate-700 rounded-lg p-3 text-white w-full focus:border-emerald-400 focus:outline-none transition-all placeholder:text-slate-500"
+              className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none transition-all placeholder:text-slate-500 focus:ring-1 focus:ring-purple-500/30"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
             />
@@ -132,7 +132,7 @@ export default function EmailCapture({
             </label>
             <div className="relative">
               <select
-                className="bg-slate-800 border border-slate-700 rounded-lg p-3 text-white w-full focus:border-emerald-400 focus:outline-none appearance-none cursor-pointer"
+                className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none appearance-none cursor-pointer focus:ring-1 focus:ring-purple-500/30"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
@@ -143,7 +143,7 @@ export default function EmailCapture({
                 <option value="other">Other</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -165,7 +165,7 @@ export default function EmailCapture({
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all text-black font-bold w-full py-4 rounded-xl shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+              className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all text-white font-bold w-full py-3 rounded-xl shadow-lg shadow-purple-900/50 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

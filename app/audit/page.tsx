@@ -75,8 +75,8 @@ export default function AuditPage() {
   const percentage = Math.round((optimizedCount / totalCount) * 100)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30">
-      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <div className="min-h-screen text-white selection:bg-fuchsia-500/30 bg-transparent relative overflow-hidden">
+      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in relative z-10">
         {/* Success Banner */}
         {shareSlug && (
           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center mb-6 animate-fade-in">
@@ -115,7 +115,7 @@ export default function AuditPage() {
           {hasSavings ? (
             <>
               <h1 className="text-2xl font-bold text-slate-300">You could save</h1>
-              <div className="text-emerald-400 text-6xl md:text-8xl font-black tracking-tighter">
+              <div className="bg-gradient-to-r from-purple-400 to-emerald-400 bg-clip-text text-transparent text-6xl md:text-8xl font-black tracking-tighter">
                 ${summary.totalMonthlySavings.toLocaleString()}/mo
               </div>
               <p className="text-xl text-slate-400">
@@ -127,7 +127,7 @@ export default function AuditPage() {
                   href="https://credex.rocks"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block mt-8 bg-emerald-500 hover:bg-emerald-400 transition-colors text-black p-4 rounded-xl text-center font-bold"
+                  className="block mt-8 bg-gradient-to-r from-purple-900/60 to-violet-900/60 border border-purple-600/40 hover:from-purple-800/60 hover:to-violet-800/60 transition-colors text-white p-6 rounded-xl text-center font-bold"
                 >
                   Credex can help you save even more — book a free consultation →
                 </a>
@@ -149,15 +149,15 @@ export default function AuditPage() {
 
           {/* Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+            <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
               <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Tools Audited</p>
               <p className="text-white text-2xl font-black">{totalCount}</p>
             </div>
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+            <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
               <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Monthly Savings</p>
               <p className="text-emerald-400 text-2xl font-black">${summary.totalMonthlySavings.toLocaleString()}</p>
             </div>
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+            <div className="bg-[#1a1135] border border-purple-800/40 rounded-xl p-5 text-center">
               <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">Annual Savings</p>
               <p className="text-emerald-400 text-2xl font-black">${summary.totalAnnualSavings.toLocaleString()}</p>
             </div>
@@ -165,7 +165,7 @@ export default function AuditPage() {
         </div>
 
         {/* AI Summary Card */}
-        <section className="bg-slate-900/80 border-l-4 border-l-emerald-500 border-y border-r border-slate-800 rounded-r-2xl rounded-l-sm p-8 shadow-xl">
+        <section className="bg-[#1a1135] border-l-4 border-l-purple-500 rounded-xl p-8 shadow-xl">
           <div className="flex items-center gap-2 mb-6">
             <span className="text-2xl">✨</span>
             <h2 className="text-white font-bold text-xl">
@@ -201,16 +201,16 @@ export default function AuditPage() {
             {summary.results.map((result) => (
               <div
                 key={result.toolId}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm hover:border-slate-700 transition-colors"
+                className="bg-[#1a1135]/80 border border-purple-800/30 rounded-xl p-6 shadow-sm hover:border-purple-600/50 transition-colors"
               >
                 <div className="flex justify-between items-start mb-6">
                   <h3 className="text-white font-bold text-xl">{result.toolName}</h3>
                   <span
                     className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full ${result.severity === 'high'
-                        ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                        ? 'bg-red-900/30 text-red-400 border border-red-800/40'
                         : result.severity === 'medium'
-                          ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                          : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                          ? 'bg-yellow-900/30 text-yellow-400 border border-yellow-800/40'
+                          : 'bg-purple-900/30 text-purple-400 border border-purple-800/40'
                       }`}
                   >
                     {result.severity === 'high'
@@ -268,7 +268,7 @@ export default function AuditPage() {
         <div className="flex flex-col md:flex-row gap-4 pt-8 pb-20">
           <button
             onClick={() => setShowEmailModal(true)}
-            className="flex-1 border border-emerald-400/50 hover:bg-emerald-400/10 text-emerald-400 rounded-xl py-4 px-6 font-bold transition-all flex items-center justify-center gap-2"
+            className="flex-1 border border-purple-500 text-purple-300 hover:bg-purple-900/30 rounded-xl py-3 px-6 font-bold transition-all flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -277,7 +277,7 @@ export default function AuditPage() {
           </button>
           <button
             onClick={() => router.push('/')}
-            className="flex-1 bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 rounded-xl py-4 px-6 font-bold transition-all flex items-center justify-center gap-2"
+            className="flex-1 bg-[#1a1135] hover:bg-[#251849] text-white border border-purple-800/40 rounded-xl py-3 px-6 font-bold transition-all flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
