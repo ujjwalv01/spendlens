@@ -50,7 +50,7 @@ export default function SpendForm() {
         try {
           setFormState(JSON.parse(saved))
         } catch {
-          console.error('Failed to parse saved form state')
+          // Failed to parse saved form state
         }
       }
       setIsLoaded(true)
@@ -171,6 +171,8 @@ export default function SpendForm() {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Honeypot */}
       <input
+        id="honeypot"
+        aria-label="Website"
         type="text"
         name="website"
         style={{ display: 'none' }}
@@ -214,8 +216,9 @@ export default function SpendForm() {
                 <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isSelected ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
                   <div className="space-y-4 pt-4 border-t border-purple-800/40" onClick={(e) => e.stopPropagation()}>
                     <div>
-                      <label className="text-slate-300 text-xs mb-1 block">Plan</label>
+                      <label htmlFor={`plan-${tool.toolId}`} className="text-slate-300 text-xs mb-1 block">Plan</label>
                       <select
+                        id={`plan-${tool.toolId}`}
                         className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
                         value={toolState.planId}
                         onChange={(e) => updateToolField(tool.toolId, 'planId', e.target.value)}
@@ -229,8 +232,9 @@ export default function SpendForm() {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-slate-300 text-xs mb-1 block">Seats</label>
+                        <label htmlFor={`seats-${tool.toolId}`} className="text-slate-300 text-xs mb-1 block">Seats</label>
                         <input
+                          id={`seats-${tool.toolId}`}
                           type="number"
                           min="1"
                           className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
@@ -239,8 +243,9 @@ export default function SpendForm() {
                         />
                       </div>
                       <div>
-                        <label className="text-slate-300 text-xs mb-1 block">Monthly Spend ($)</label>
+                        <label htmlFor={`spend-${tool.toolId}`} className="text-slate-300 text-xs mb-1 block">Monthly Spend ($)</label>
                         <input
+                          id={`spend-${tool.toolId}`}
                           type="number"
                           className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 text-sm"
                           value={toolState.monthlySpend}
@@ -260,9 +265,10 @@ export default function SpendForm() {
         <h2 className="text-purple-300 font-bold text-lg mb-4">2. About your team</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-slate-300 text-sm mb-2 block font-medium">Total Team Size</label>
+            <label htmlFor="teamSize" className="text-slate-300 text-sm mb-2 block font-medium">Total Team Size</label>
             <div className="relative">
               <select
+                id="teamSize"
                 className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30"
                 value={formState.teamSize}
                 onChange={(e) => setFormState({ ...formState, teamSize: e.target.value })}
@@ -283,9 +289,10 @@ export default function SpendForm() {
             </div>
           </div>
           <div>
-            <label className="text-slate-300 text-sm mb-2 block font-medium">Primary AI Use Case</label>
+            <label htmlFor="useCase" className="text-slate-300 text-sm mb-2 block font-medium">Primary AI Use Case</label>
             <div className="relative">
               <select
+                id="useCase"
                 className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full appearance-none cursor-pointer pr-10 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30"
                 value={formState.useCase}
                 onChange={(e) => setFormState({ ...formState, useCase: e.target.value })}

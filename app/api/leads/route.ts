@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
     // PART 1 — ABUSE PROTECTION
     if (honeypot) {
-      console.log('Bot detected via honeypot')
+      // Bot detected via honeypot
       return NextResponse.json({ success: true, slug: 'fake' })
     }
 
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (auditError) {
-      console.error('Supabase Audit Error:', auditError)
+      // Supabase Audit Error
       throw new Error('Failed to save audit data')
     }
 
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (leadError) {
-      console.error('Supabase Lead Error:', leadError)
+      // Supabase Lead Error
       throw new Error('Failed to save lead data')
     }
 
@@ -163,8 +163,8 @@ export async function POST(request: NextRequest) {
             </div>
           `,
         })
-      } catch (emailError) {
-        console.error('Email sending failed:', emailError)
+      } catch {
+        // Email sending failed
       }
     }
 
@@ -173,8 +173,8 @@ export async function POST(request: NextRequest) {
       success: true,
       slug,
     })
-  } catch (error) {
-    console.error('API /leads error:', error)
+  } catch {
+    // API /leads error
     return NextResponse.json(
       { error: 'Something went wrong. Please try again later.' },
       { status: 500 }

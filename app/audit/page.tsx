@@ -54,7 +54,7 @@ export default function AuditPage() {
         }
         setIsAiLoading(false)
       } catch {
-        console.error('Failed to parse or fetch audit data')
+        // Failed to parse or fetch audit data
         setIsAiLoading(false)
       }
     }
@@ -76,7 +76,7 @@ export default function AuditPage() {
 
   return (
     <div className="min-h-screen text-white selection:bg-fuchsia-500/30 bg-transparent relative overflow-hidden">
-      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in relative z-10">
+      <main role="main" className="p-6 md:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in relative z-10">
         {/* Success Banner */}
         {shareSlug && (
           <div className="bg-violet-500/10 border border-violet-500/30 rounded-xl p-4 text-center mb-6 animate-fade-in">

@@ -66,7 +66,7 @@ export default function EmailCapture({
       const data = await response.json()
       onSuccess(data.slug)
     } catch (err) {
-      console.error('Lead submission error:', err)
+      // Lead submission error
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -78,6 +78,7 @@ export default function EmailCapture({
       <div className="bg-[#1a1135] border border-purple-700/50 rounded-2xl p-8 max-w-md w-full relative shadow-2xl shadow-purple-900/40 animate-fade-in">
         <button
           onClick={onClose}
+          aria-label="Close modal"
           className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-xl p-2"
         >
           ✕
@@ -90,7 +91,7 @@ export default function EmailCapture({
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Get your full report</h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-300 text-sm">
             Save your audit results and get personalized savings tips delivered to your inbox.
           </p>
         </div>
@@ -98,10 +99,11 @@ export default function EmailCapture({
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <div>
-            <label className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2 block">
+            <label htmlFor="email" className="text-slate-200 text-xs font-bold uppercase tracking-wider mb-2 block">
               Work Email
             </label>
             <input
+              id="email"
               required
               type="email"
               placeholder="you@company.com"
@@ -113,10 +115,11 @@ export default function EmailCapture({
 
           {/* Company Name */}
           <div>
-            <label className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2 block">
+            <label htmlFor="companyName" className="text-slate-200 text-xs font-bold uppercase tracking-wider mb-2 block">
               Company Name (optional)
             </label>
             <input
+              id="companyName"
               type="text"
               placeholder="Acme Inc."
               className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none transition-all placeholder:text-slate-500 focus:ring-1 focus:ring-purple-500/30"
@@ -127,11 +130,12 @@ export default function EmailCapture({
 
           {/* Role Dropdown */}
           <div>
-            <label className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2 block">
+            <label htmlFor="role" className="text-slate-200 text-xs font-bold uppercase tracking-wider mb-2 block">
               Your Role (optional)
             </label>
             <div className="relative">
               <select
+                id="role"
                 className="bg-[#0d0a1a] border border-purple-800/50 rounded-lg p-3 text-white w-full focus:border-purple-500 focus:outline-none appearance-none cursor-pointer focus:ring-1 focus:ring-purple-500/30"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -152,6 +156,8 @@ export default function EmailCapture({
 
           {/* Honeypot */}
           <input
+            id="honeypot"
+            aria-label="Website"
             type="text"
             name="website"
             value={honeypot}
@@ -185,7 +191,7 @@ export default function EmailCapture({
               </p>
             )}
 
-            <p className="text-slate-500 text-[10px] text-center mt-4 uppercase tracking-widest font-medium">
+            <p className="text-slate-400 text-xs text-center mt-4 uppercase tracking-widest font-medium">
               No spam. Credex may reach out for high-savings audits.
             </p>
           </div>

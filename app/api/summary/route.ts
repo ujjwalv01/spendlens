@@ -92,8 +92,8 @@ Write in second person (you/your). Be specific about their actual tools and real
         },
         { status: 200 }
       )
-    } catch (err) {
-      console.error('Groq API Error or Timeout:', err)
+    } catch {
+      // Groq API Error or Timeout
       // Fallback in case of API failure
       return NextResponse.json(
         {
@@ -103,8 +103,8 @@ Write in second person (you/your). Be specific about their actual tools and real
         { status: 200 }
       )
     }
-  } catch (error) {
-    console.error('Request Processing Error:', error)
+  } catch {
+    // Request Processing Error
     return NextResponse.json(
       {
         summary: 'Unable to generate summary at this time.',

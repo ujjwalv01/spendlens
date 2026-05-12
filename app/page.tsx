@@ -21,7 +21,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20 px-4">
+      <main role="main" className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           {/* Header Area */}
           <div className="space-y-6 relative">
@@ -46,7 +46,7 @@ export default function Home() {
             >
               Audit My AI Spend - It&apos;s Free
             </button>
-            <p className="text-purple-300/50 text-sm">
+            <p className="text-purple-300/80 text-sm">
               No signup required · Takes 2 minutes
             </p>
           </div>
