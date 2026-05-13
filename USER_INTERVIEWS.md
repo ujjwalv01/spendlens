@@ -19,7 +19,7 @@
 **What they care about:**
 - Justifying spend to non-technical stakeholders
 - Not looking uninformed in front of their team
-- Speed — they don't want to research pricing themselves
+- Speed ,they don't want to research pricing themselves
 
 **What would make them share it:**
 - A specific dollar savings number they didn't expect
@@ -39,8 +39,8 @@
 - "If it told me I could cut $80/month by switching one plan, I'd do it that day."
 
 **What they care about:**
-- Runway — every dollar matters at this stage
-- Not spending time on this problem — wants instant clarity
+- Runway every dollar matters at this stage
+- Not spending time on this problem wants instant clarity
 - Feeling like they made a smart decision
 
 **What would make them share it:**
@@ -62,7 +62,7 @@
 
 **What they care about:**
 - Per-tool breakdown, not just aggregate savings
-- Seat utilization — paying for unused seats is the biggest issue
+- Seat utilization, paying for unused seats is the biggest issue
 - Something they can share with their ops/finance person
 
 **What would make them share it:**
@@ -116,7 +116,7 @@
 ## Patterns Across Interviews
 
 **Pain points:**
-1. Nobody owns AI spend — it accumulates tool by tool, month by month
+1. Nobody owns AI spend, it accumulates tool by tool, month by month
 2. Seat waste is the #1 hidden cost (paying for seats people don't use)
 3. Overlap between tools (Cursor + Windsurf, Claude + ChatGPT) is common and unexamined
 4. Non-technical stakeholders (CFO, co-founder) are asking questions engineering can't answer well
@@ -124,7 +124,7 @@
 **Share triggers:**
 1. A specific, surprising dollar number ("I'm wasting $380/month")
 2. A result they can forward to justify a decision
-3. The "Spotify Wrapped" effect — part confession, part flex on Twitter/LinkedIn
+3. The "Spotify Wrapped" effect , part confession, part flex on Twitter/LinkedIn
 
 **What they don't want:**
 - To sign up before seeing results
