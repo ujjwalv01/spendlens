@@ -107,8 +107,11 @@ export default function AuditPage() {
                 style={{ width: percentage + '%' }}
               />
             </div>
-            <p className="text-purple-300/60 text-xs uppercase tracking-widest text-center mb-8">
-              {optimizedCount} of {totalCount} tools already optimized ({percentage}%)
+            <p className="text-purple-300/80 text-sm uppercase tracking-widest text-center mb-1">
+              Your stack efficiency score: <span className="text-white font-bold">{percentage}/100</span>
+            </p>
+            <p className="text-purple-300/50 text-xs text-center mb-8">
+              {optimizedCount} of {totalCount} tools already optimized
             </p>
           </div>
 
@@ -121,6 +124,20 @@ export default function AuditPage() {
               <p className="text-purple-200/80 text-lg mt-3">
                 That&apos;s <span className="text-white font-bold">${summary.totalAnnualSavings.toLocaleString()} per year</span> back in your pocket.
               </p>
+
+              {summary.totalMonthlySavings > 0 && (
+                <div className="mt-6 bg-red-950/30 border border-red-800/30 rounded-xl p-4 text-center max-w-sm mx-auto">
+                  <p className="text-red-300/70 text-xs uppercase tracking-widest mb-1">
+                    Every month you wait costs you
+                  </p>
+                  <p className="text-red-300 text-2xl font-black">
+                    ${summary.totalMonthlySavings.toFixed(0)}
+                  </p>
+                  <p className="text-red-300/50 text-xs mt-1">
+                    Act now to start saving immediately
+                  </p>
+                </div>
+              )}
 
               {summary.totalMonthlySavings > 500 && (
                 <a

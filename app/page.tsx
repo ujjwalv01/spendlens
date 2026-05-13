@@ -4,24 +4,29 @@ import SpendForm from '@/components/SpendForm'
 export default function Home() {
   return (
     <div className="min-h-screen text-white selection:bg-fuchsia-500/30 bg-transparent relative overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(ellipse at center, 
+            transparent 40%, 
+            rgba(8, 6, 18, 0.8) 100%)`
+        }} />
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 bg-transparent backdrop-blur-sm border-b border-purple-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-purple-300 font-black text-xl">
+            <span className="text-white font-black text-xl">
               SpendLens
             </span>
-
           </div>
           <div className="flex gap-6 text-sm font-medium">
-            <a href="#" className="text-purple-300/70 hover:text-purple-200">Pricing Data</a>
-            <a href="#how-it-works" className="text-purple-300/70 hover:text-purple-200">How It Works</a>
+            <a href="#" className="text-white/80 hover:text-white transition-colors">Pricing Data</a>
+            <a href="#how-it-works" className="text-white/80 hover:text-white transition-colors">How It Works</a>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <main role="main" className="pt-32 pb-20 px-4">
+      <main role="main" className="relative z-10 pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           {/* Header Area */}
           <div className="space-y-6 relative">
@@ -132,7 +137,7 @@ export default function Home() {
       </main>
 
       {/* Simple Footer */}
-      <footer className="border-t border-slate-800/50 py-12 text-center">
+      <footer className="relative z-10 border-t border-slate-800/50 py-12 text-center">
         <p className="text-slate-500 text-sm">
           © {new Date().getFullYear()} SpendLens. Save on your AI compute and licenses.
         </p>
