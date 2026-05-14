@@ -4,6 +4,7 @@ import { AuditSummary } from '@/lib/auditEngine'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import EmailCapture from '@/components/EmailCapture'
+import ToolComparison from '@/components/ToolComparison'
 
 export default function AuditPage() {
   const router = useRouter()
@@ -13,6 +14,7 @@ export default function AuditPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
   const [shareSlug, setShareSlug] = useState<string | null>(null)
+  const [showComparison, setShowComparison] = useState<string | null>(null)
 
   useEffect(() => {
     const loadData = async () => {
@@ -274,6 +276,40 @@ export default function AuditPage() {
                   <p className="text-slate-400 italic text-sm leading-relaxed">
                     &quot;{result.reason}&quot;
                   </p>
+
+                  {(result.severity === 'high' || result.severity === 'medium') && result.recommendedToolName && result.monthlySavings > 0 && (
+                    <div className="mt-2">
+                      <button
+                        onClick={() => setShowComparison(
+                          showComparison === result.toolId 
+                          ? null 
+                          : result.toolId
+                        )}
+                        className="text-violet-400 text-xs underline mt-3 hover:text-violet-300"
+                      >
+                        {showComparison === result.toolId 
+                          ? 'Hide comparison' 
+                          : 'Compare tools →'}
+                      </button>
+
+                      {showComparison === result.toolId && (
+                        <ToolComparison
+                          currentTool={result.toolName}
+                          currentToolId={result.toolId}
+                          currentPlan={result.currentPlanName}
+                          currentPrice={result.currentMonthlySpend}
+                          recommendedTool={result.recommendedToolName || ''}
+                          recommendedToolId={result.toolId}
+                          recommendedPrice={
+                            result.currentMonthlySpend - result.monthlySavings
+                          }
+                          monthlySavings={result.monthlySavings}
+                          seats={1}
+                          useCase="coding"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
